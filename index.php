@@ -9,6 +9,13 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
+    body {
+        color: white;
+        font-family: "Nunito", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal
+    }
+
     #wrapper {
         max-width: 900px;
         min-height: 500px;
@@ -50,7 +57,7 @@
         border-bottom: solid thin #ffffff55;
         cursor: pointer;
         padding: 5px;
-        transition: 0.5s
+        transition: all 0.5s ease;
     }
 
     #left_pannel label:hover {
@@ -91,6 +98,11 @@
         background-color: #f2f7f8;
         flex: 2;
         min-height: 430px;
+        transition: all 0.5s;
+    }
+
+    #radio_contacts:checked ~ #inner_right_pannel, #radio_settings:checked ~ #inner_right_pannel {
+        flex: 0;
     }
 
 
@@ -113,9 +125,9 @@
                 <br>
                 <br>
                 <div>
-                    <label for="box">Chat <img src="ui/icons/chat.png" alt=""></label>
-                    <label for="">Contacts <img src="ui/icons/contacts.png" alt=""></label>
-                    <label for="">Settings <img src="ui/icons/settings.png" alt=""></label>
+                    <label id="label_chat" for="radio_chat">Chat <img src="ui/icons/chat.png" alt=""></label>
+                    <label id="label_contacts" for="radio_contacts">Contacts <img src="ui/icons/contacts.png" alt=""></label>
+                    <label id="label_settings" for="radio_settings">Settings <img src="ui/icons/settings.png" alt=""></label>
                 </div>
 
             </div>
@@ -130,11 +142,13 @@
             <div id="container" style="display: flex;">
 
                 <div id="inner_left_pannel">
-                    <input type="checkbox" id="box">
                 </div>
 
-                <div id="inner_right_pannel">
+                <input type="radio" id="radio_chat" name="buts" style="display: none;">
+                <input type="radio" id="radio_contacts" name="buts" style="display: none;">
+                <input type="radio" id="radio_settings" name="buts" style="display: none;">
 
+                <div id="inner_right_pannel">
                 </div>
 
             </div>
@@ -143,5 +157,27 @@
 
     </div>
 </body>
+<script>
+    function _(ele){
+        return document.getElementById(ele);
+    }
 
+    var label = _("label_chat");
+
+    label.addEventListener("click", function(){
+        var inner_pannel = _("inner_left_pannel");
+
+        var ajax = new XMLHttpRequest();
+        ajax.onload = function(){
+            if (ajax.status == 200 || ajax.readyState == 4){
+                inner_pannel.innerHTML = ajax.responseText;
+            }
+        };
+
+        ajax.open("POST", "file.txt", true);
+        ajax.send();
+
+    });
+
+</script>
 </html>

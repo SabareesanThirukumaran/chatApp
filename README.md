@@ -6,4 +6,4 @@ Began creating the PHP file alongsid adding the necessary ui assets to be used l
 **Day 2**
 
 Created the PHP files to manage the database, created the database on "phpmyadmin" and began working on how to send and store the data to the database.
-![image](https://github.com/user-attachments/assets/7619e1c2-48cf-4885-baf4-63c627ec735b)
+![image](https://github.com/user-attachments/assets/481d4b68-3ff6-4900-9d76-ea0b717c3656)

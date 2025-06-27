@@ -7,3 +7,9 @@ Began creating the PHP file alongsid adding the necessary ui assets to be used l
 
 Created the PHP files to manage the database, created the database on "phpmyadmin" and began working on how to send and store the data to the database.
 ![image](https://github.com/user-attachments/assets/481d4b68-3ff6-4900-9d76-ea0b717c3656)
+
+**Day 3**
+
+Made the login process. First pushed all the data from signup page onto the database, then retrieved (and read) the data, parsed into json and validated to allow logins.
+
+![image](https://github.com/user-attachments/assets/b7da6d36-3704-4117-b9c0-d582d2fc4159)

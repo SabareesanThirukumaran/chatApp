@@ -1,5 +1,20 @@
 <?php 
 
+session_start();
+
+$info = (Object)[];
+
+//check if logged in
+if (!isset($_SESSION['userid']))
+{
+    if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type != "login") {
+        $info->logged_in = false;
+        echo json_encode($info);
+        die;        
+    }
+
+}
+
 require_once("classes/initialise.php");
 $DB = new Database();
 
@@ -11,22 +26,19 @@ $Error = "";
 //process the data
 if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup")
 {
+
     // signup
-    $data = false;
-    $data['userid'] = $DB->generate_id(20);
-    $data['username'] = $DATA_OBJ->username;
-    $data['email'] = $DATA_OBJ->email;
-    $data['password'] = $DATA_OBJ->password;
-    $data['date'] = date("Y-m-d H:i:s") ;
+    include("includes/security.php");
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "login")
+{
 
-    $query = "insert into users (userid,username,email,password,date) values (:userid,:username,:email,:password,:date)";
-    // $result = $DB->write($query, $data); 
+    //login
+    include("includes/login.php");
 
-    if ($result)
-    {
-        echo "Your profile was created";
-    }else
-    {
-        echo "Your profile was not created";
-    }
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "user_info")
+{
+
+    //user info
+    include("includes/user_info.php")
+
 }

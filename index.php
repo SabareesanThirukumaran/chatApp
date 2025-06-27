@@ -43,7 +43,7 @@
         padding: 5px;
     }
 
-    #left_pannel span {
+    #left_pannel #email {
         opacity: 0.5;
         font-size: 12px;
     }
@@ -112,13 +112,13 @@
     <div id="wrapper">
 
         <div id="left_pannel">
-            <div style="padding: 10px">
+            <div id="user_info" style="padding: 10px">
 
-                <img src="ui/images/user1.jpg" alt="User Pfp" id="profile_image">
+                <img src="ui/images/male.jpg" alt="User Pfp" id="profile_image">
                 <br>
-                Sabareesan Thirukumaran
+                <span id="username" >Username</span>
                 <br>
-                <span>SabareesanThirukumaran@hotmail.com</span>
+                <span id="email">email@gmail.com</span>
 
                 
                 <br>
@@ -162,22 +162,42 @@
         return document.getElementById(ele);
     }
 
-    var label = _("label_chat");
+    function get_data(find,type){
 
-    label.addEventListener("click", function(){
-        var inner_pannel = _("inner_left_pannel");
+        var xml = new XMLHttpRequest();
 
-        var ajax = new XMLHttpRequest();
-        ajax.onload = function(){
-            if (ajax.status == 200 || ajax.readyState == 4){
-                inner_pannel.innerHTML = ajax.responseText;
+        xml.onload = function(){
+
+            if(xml.readyState == 4 || xml.status == 200){
+                handle_result(xml.responseText,type);
             }
-        };
 
-        ajax.open("POST", "file.txt", true);
-        ajax.send();
+        }
 
-    });
+        var data = {};
+        data.find = find;
+        data.data_type = type;
+        data = JSON.stringify(data);
+
+        xml.open("POST", "api.php", true);
+        xml.send(data);
+    }
+
+    function handle_result(result, type){
+
+        if(result.trim() != ""){
+
+            var obj = JSON.parse(result);
+            if(!obj.logged_in){
+                window.location = "login.php";
+            } else {
+
+                alert(result);
+            }
+        }
+    }
+
+    get_data({}, "user_info");
 
 </script>
 </html>

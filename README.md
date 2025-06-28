@@ -13,3 +13,7 @@ Created the PHP files to manage the database, created the database on "phpmyadmi
 Made the login process. First pushed all the data from signup page onto the database, then retrieved (and read) the data, parsed into json and validated to allow logins.
 
 ![image](https://github.com/user-attachments/assets/b7da6d36-3704-4117-b9c0-d582d2fc4159)
+
+**Day 4**
+
+Debugged the login, logout, and signup pages. Then added the changes between the "chat", "contacts" and "settings" pages, and retrieved all users from the database and put them into "contacts"

@@ -42,6 +42,21 @@ if (empty($DATA_OBJ->email))
 
 }
 
+// Check gender
+$data['gender'] = isset($DATA_OBJ->gender) ? $DATA_OBJ->gender : null;
+if (empty($DATA_OBJ->gender))
+{
+    $Error .= "Please select a gender . <br>";
+} else 
+{
+
+    if ($DATA_OBJ->gender != "Male" && $DATA_OBJ->gender != "Female")
+    {
+        $Error .= "Please enter a valid gender. <br>";
+    }
+
+}
+
 // Check Password
 $data['password'] = $DATA_OBJ->password;
 $password = $DATA_OBJ->password2;
@@ -63,7 +78,7 @@ $password = $DATA_OBJ->password2;
 
 if ($Error == "")
 {
-    $query = "insert into users (userid,username,email,password,date) values (:userid,:username,:email,:password,:date)";
+    $query = "insert into users (userid,username,gender,email,password,date) values (:userid,:username,:gender,:email,:password,:date)";
     $result = $DB->write($query, $data); 
 
     if ($result)

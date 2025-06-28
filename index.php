@@ -105,6 +105,22 @@
         flex: 0;
     }
 
+    #contact {
+
+        width: 100px;
+        height: 140px;
+        margin:10px;
+        display: inline-block;
+        vertical-align: top;
+    
+    }
+
+    #contact img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+    }
+
 
 </style>
 
@@ -128,9 +144,11 @@
                     <label id="label_chat" for="radio_chat">Chat <img src="ui/icons/chat.png" alt=""></label>
                     <label id="label_contacts" for="radio_contacts">Contacts <img src="ui/icons/contacts.png" alt=""></label>
                     <label id="label_settings" for="radio_settings">Settings <img src="ui/icons/settings.png" alt=""></label>
+                    <label id="logout" for="radio_logout">Logout <img src="ui/icons/logout.png" alt=""></label>
                 </div>
 
             </div>
+
         </div>
 
         <div id="right_pannel">
@@ -142,6 +160,8 @@
             <div id="container" style="display: flex;">
 
                 <div id="inner_left_pannel">
+
+
                 </div>
 
                 <input type="radio" id="radio_chat" name="buts" style="display: none;">
@@ -161,6 +181,19 @@
     function _(ele){
         return document.getElementById(ele);
     }
+    
+    var label_contacts = _("label_contacts");
+    label_contacts.addEventListener("click", get_contacts);
+
+    var label_chat = _("label_chat");
+    label_chat.addEventListener("click", get_chats);
+
+    var label_settings = _("label_settings");
+    label_settings.addEventListener("click", get_settings);
+
+    var logout = _("logout");
+    logout.addEventListener("click", unlog);
+
 
     function get_data(find,type){
 
@@ -184,17 +217,66 @@
     }
 
     function handle_result(result, type){
-
         if(result.trim() != ""){
 
             var obj = JSON.parse(result);
-            if(!obj.logged_in){
+            if(typeof(obj.logged_in) != "undefined" && !obj.logged_in){
+
                 window.location = "login.php";
             } else {
 
-                alert(result);
+                switch(obj.data_type){
+
+                    case "user_info":
+                        var username = _("username");
+                        var email = _("email");
+
+                        username.innerHTML = obj.username;
+                        email.innerHTML = obj.email;
+                        break;
+
+                    case "contacts":
+                        var inner_left_pannel = _("inner_left_pannel");
+
+                        inner_left_pannel.innerHTML = obj.message;
+
+                        break;
+
+                    case "chats":
+                        var inner_left_pannel = _("inner_left_pannel");
+
+                        inner_left_pannel.innerHTML = obj.message;
+
+                        break;
+
+                    case "settings":
+                        var inner_left_pannel = _("inner_left_pannel");
+
+                        inner_left_pannel.innerHTML = obj.message;
+
+                        break;
+                }
             }
         }
+    }
+
+    function unlog(){
+        var answer = confirm("Are you sure you want to log out ?");
+        if (answer){
+            get_data({}, "logout"); 
+        }
+    }
+
+    function get_contacts(e){
+        get_data({}, "contacts"); 
+    }
+
+    function get_chats(e){
+        get_data({}, "chats"); 
+    }    
+
+    function get_settings(e){
+        get_data({}, "settings"); 
     }
 
     get_data({}, "user_info");

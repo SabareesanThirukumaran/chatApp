@@ -17,3 +17,5 @@ Made the login process. First pushed all the data from signup page onto the data
 **Day 4**
 
 Debugged the login, logout, and signup pages. Then added the changes between the "chat", "contacts" and "settings" pages, and retrieved all users from the database and put them into "contacts"
+
+![image](https://github.com/user-attachments/assets/8188f16c-7eda-41f5-ab81-76f7b122c2c8)

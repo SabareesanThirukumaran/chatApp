@@ -24,4 +24,4 @@ Debugged the login, logout, and signup pages. Then added the changes between the
 
 Added the settings page, allowed changes into the database from the settings page, kept getting bugs on the image changes but resolved the issue by decomposing the problem
 
-![image](https://github.com/user-attachments/assets/8188f16c-7eda-41f5-ab81-76f7b122c2c8)
+![image](https://github.com/user-attachments/assets/c57a2378-7418-44d5-9059-6bbe43cee3bb)

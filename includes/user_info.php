@@ -17,6 +17,14 @@ if ($Error == "")
     {
         $result = $result[0];
         $result->data_type = "user_info";
+
+        // check if image exists
+        $image = ($result->gender == "Male") ?  "ui/images/male.jpg" : "ui/images/female.jpg";
+        if(file_exists($result->image)){
+            $image = $result->image;
+        }
+
+        $result->image = $image;
         echo json_encode($result);
     }else
     {

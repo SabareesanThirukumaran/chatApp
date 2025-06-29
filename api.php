@@ -52,12 +52,17 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup")
 
 } else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "chats")
 {
-    //contact information
+    //chat information
     include("includes/chats.php");
 
 } else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "settings")
 {
-    //contact information
+    //setting information
     include("includes/settings.php");
+
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "save_settings")
+{
+    //save information
+    include("includes/save_settings.php");
 
 }

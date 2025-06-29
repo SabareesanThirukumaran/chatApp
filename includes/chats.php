@@ -1,5 +1,5 @@
 <?php
-
+    sleep(0.5);
     $mydata = 
     'chats go here';
 

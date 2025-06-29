@@ -83,7 +83,9 @@
         text-align: center;
         font-family: "Nunito", sans-serif;
         font-optical-sizing: auto;
-        font-style: normal
+        font-style: normal;
+
+        position: relative;
     }
 
     #inner_left_pannel {
@@ -121,6 +123,15 @@
         border-radius: 50%;
     }
 
+    .loader_on  {
+        position: absolute;
+        width: 30%;
+    }
+
+    .loader_off  {  
+        display: none;
+    }
+
 
 </style>
 
@@ -154,15 +165,13 @@
         <div id="right_pannel">
 
             <div id="header">
+                <div class="loader_on" id="loader_holder"><img style="width: 70px" src="ui/icons/giphy.gif"></div>
                 WeChat
             </div>
 
             <div id="container" style="display: flex;">
 
-                <div id="inner_left_pannel">
-
-
-                </div>
+                <div id="inner_left_pannel"></div>
 
                 <input type="radio" id="radio_chat" name="buts" style="display: none;">
                 <input type="radio" id="radio_contacts" name="buts" style="display: none;">
@@ -198,10 +207,13 @@
     function get_data(find,type){
 
         var xml = new XMLHttpRequest();
+        var loader_holder = _("loader_holder");
+        loader_holder.className = "loader_on";
 
         xml.onload = function(){
 
             if(xml.readyState == 4 || xml.status == 200){
+                loader_holder.className = "loader_off";
                 handle_result(xml.responseText,type);
             }
 
@@ -230,7 +242,9 @@
                     case "user_info":
                         var username = _("username");
                         var email = _("email");
+                        var profile_image = _("profile_image");
 
+                        profile_image.src = obj.image;
                         username.innerHTML = obj.username;
                         email.innerHTML = obj.email;
                         break;
@@ -255,6 +269,14 @@
                         inner_left_pannel.innerHTML = obj.message;
 
                         break;
+
+                    case "save_settings":
+
+                        alert(obj.message);
+                        get_data({}, "user_info");
+                        get_settings(true);
+                        break;
+
                 }
             }
         }
@@ -282,4 +304,75 @@
     get_data({}, "user_info");
 
 </script>
+
+<script>
+
+    function collect_data(){
+
+        var save_settings_button = _("save_settings_button");
+        save_settings_button.disabled = true;
+        save_settings_button.value = "Loading...Please wait.";
+
+        var myform = _("myform");
+        var inputs = myform.getElementsByTagName("INPUT");
+
+        var data = {};
+        for (var i = inputs.length - 1; i >= 0; i--){
+
+            var key = inputs[i].name;
+            switch(key){
+
+                case "username":
+                    data.username = inputs[i].value;
+                    break;
+
+                case "email":
+                    data.email = inputs[i].value;
+                    break;
+
+                case "gender":
+                    if(inputs[i].checked){
+                        data.gender = inputs[i].value;
+                    }
+                    break;
+                    
+                case "password":
+                    data.password = inputs[i].value;
+                    break;
+
+                case "password2":
+                    data.password2 = inputs[i].value;
+                    break;
+            }
+
+        }
+
+        send_data(data, "save_settings");
+    }
+
+    function send_data(data, type){
+
+        var xml = new XMLHttpRequest();
+
+        xml.onload = function(){
+
+            if (xml.readyState == 4 || xml.status == 200){
+
+                handle_result(xml.responseText);
+                var save_settings_button = _("save_settings_button");
+                save_settings_button.disabled = false;
+                save_settings_button.value = "Sign Up";
+            }
+
+        }
+
+        data.data_type = type;
+        var data_string = JSON.stringify(data);
+
+        xml.open("POST", "api.php", true);
+        xml.send(data_string);
+    }
+
+</script>
+
 </html>
